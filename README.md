@@ -5,14 +5,17 @@ A simple Java-based broadcast server and client application.
 ## Files
 
 1. **BroadcastApp.java**
+
    - Main entry point
    - Usage: `java BroadcastApp [start|connect]`
 
 2. **BroadcastServer.java**
+
    - Implements server functionality
    - Manages client connections and message broadcasting
 
 3. **BroadcastClient.java**
+
    - Implements client functionality
    - Connects to server, sends and receives messages
 
@@ -42,6 +45,21 @@ A simple Java-based broadcast server and client application.
 ## Note
 
 Modify PORT in BroadcastApp.java to change the default port.
+
+## Testing
+
+- BroadcastServer
+![server](</git-assets/server.png>)
+
+
+- BroadcastClient - 1
+![client1](</git-assets/client1.png>)
+
+- BroadcastClient - 2
+![client2](</git-assets/client2.png>)
+
+- BroadcastClient - 3
+![client3](</git-assets/client3.png>)
 
 
 [challenge](https://roadmap.sh/projects/broadcast-server)
