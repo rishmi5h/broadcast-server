@@ -21,7 +21,7 @@ public class BroadcastClient {
             System.out.println("Connected to server. Type messages to broadcast (or 'exit' to quit):");
             
             // Thread for receiving messages
-            new Thread(() -> {
+            Thread receiveThread = new Thread(() -> {
                 String serverMessage;
                 try {
                     while ((serverMessage = in.readLine()) != null) {
@@ -30,12 +30,14 @@ public class BroadcastClient {
                 } catch (IOException e) {
                     System.out.println("Disconnected from server.");
                 }
-            }).start();
+            });
+            receiveThread.start();
 
             // Main thread for sending messages
             String userInput;
             while ((userInput = stdIn.readLine()) != null) {
                 if ("exit".equalsIgnoreCase(userInput)) {
+                    out.println("exit");
                     break;
                 }
                 out.println(userInput);
@@ -43,5 +45,6 @@ public class BroadcastClient {
         } catch (IOException e) {
             System.out.println("Client error: " + e.getMessage());
         }
+        System.out.println("Client disconnected.");
     }
 }

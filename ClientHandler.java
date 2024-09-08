@@ -20,6 +20,10 @@ public class ClientHandler implements Runnable {
 
             String message;
             while ((message = in.readLine()) != null) {
+                if ("exit".equalsIgnoreCase(message)) {
+                    System.out.println("Client " + socket.getInetAddress() + " requested to exit.");
+                    break;
+                }
                 System.out.println("Received from " + socket.getInetAddress() + ": " + message);
                 server.broadcast(message, this);
             }
