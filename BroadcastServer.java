@@ -24,7 +24,7 @@ public class BroadcastServer {
                     ClientHandler clientHandler = new ClientHandler(clientSocket, this);
                     clients.add(clientHandler);
                     new Thread(clientHandler).start();
-                    System.out.println("New client connected: " + clientSocket.getInetAddress());
+                    System.out.println("New client connected: " + clientHandler.getClientId());
                 } catch (IOException e) {
                     if (!serverSocket.isClosed()) {
                         System.out.println("Error accepting client connection: " + e.getMessage());

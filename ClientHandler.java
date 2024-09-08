@@ -6,10 +6,12 @@ public class ClientHandler implements Runnable {
     private final BroadcastServer server;
     private PrintWriter out;
     private BufferedReader in;
+    private final String clientId;
 
     public ClientHandler(Socket socket, BroadcastServer server) {
         this.socket = socket;
         this.server = server;
+        this.clientId = socket.getInetAddress().getHostAddress() + ":" + socket.getPort();
     }
 
     @Override
@@ -21,14 +23,14 @@ public class ClientHandler implements Runnable {
             String message;
             while ((message = in.readLine()) != null) {
                 if ("exit".equalsIgnoreCase(message)) {
-                    System.out.println("Client " + socket.getInetAddress() + " requested to exit.");
+                    System.out.println("Client " + clientId + " requested to exit.");
                     break;
                 }
-                System.out.println("Received from " + socket.getInetAddress() + ": " + message);
-                server.broadcast(message, this);
+                System.out.println("Received from " + clientId + ": " + message);
+                server.broadcast(clientId + ": " + message, this);
             }
         } catch (IOException e) {
-            System.out.println("Error handling client: " + e.getMessage());
+            System.out.println("Error handling client " + clientId + ": " + e.getMessage());
         } finally {
             close();
         }
@@ -44,9 +46,13 @@ public class ClientHandler implements Runnable {
             if (in != null) in.close();
             if (out != null) out.close();
             if (socket != null) socket.close();
-            System.out.println("Client disconnected: " + socket.getInetAddress());
+            System.out.println("Client disconnected: " + clientId);
         } catch (IOException e) {
-            System.out.println("Error closing client connection: " + e.getMessage());
+            System.out.println("Error closing client connection " + clientId + ": " + e.getMessage());
         }
+    }
+
+    public String getClientId() {
+        return clientId;
     }
 }
